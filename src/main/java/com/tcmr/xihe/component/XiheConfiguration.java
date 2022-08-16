@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022/08/14 19:18
  **/
 @Configuration
-public class DkConfiguration {
+public class XiheConfiguration {
 
 
 }
