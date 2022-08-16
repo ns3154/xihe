@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: xihe
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  profiles:
+    active: @profiles.active@
+    group:
+      local:
+        - mysql-dev
+      test:
+        - mysql-test
+      prod:
+        - mysql-prod
+
+xihe:
+  knife4j:
+    title: ${spring.application.name}
+    description: ${spring.application.name} app Restful API
+    service-url: 待定
+    name: 联系人
+    url: 联系网站
+    email: 联系人邮箱
+  test:
+    api: false
+  jwt:
+    secret: 'sfasfasdf'
+    expires: 7
+  log:
+    aspect:
+      enable-count: false
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "local"
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "test"
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+

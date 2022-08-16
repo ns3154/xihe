@@ -1,0 +1,19 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  profiles:
+    group:
+      local:
+        - mysql-dev
+
+xihe:
+  test:
+    api: true
+  jwt:
+    secret: 'sfasfasdf'
+    expires: 7
+  log:
+    aspect:
+      enable-count: true
+      exclude-methods:
