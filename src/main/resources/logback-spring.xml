@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+    <springProperty scope="context" name="application.name" source="spring.application.name" />
+    <springProperty scope="context" name="log.path.home" source="xihe.log.path" />
+    <springProperty scope="context" name="log.max.history" source="xihe.log.max.history" />
     <!-- 应用名称：和统一配置中的项目代码保持一致（小写） -->
-    <property name="APP_NAME" value="xihe"/>
+    <property name="APP_NAME" value="${application.name}"/>
     <contextName>${APP_NAME}</contextName>
     <!--日志文件保留天数 -->
-    <property name="LOG_MAX_HISTORY" value="30"/>
+    <property name="LOG_MAX_HISTORY" value="${log.max.history}"/>
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
 
     <!--应用日志文件保存路径 -->
     <!--在没有定义${LOG_HOME}系统变量的时候，可以设置此本地变量。提交测试、上线时，要将其注释掉，使用系统变量。 -->
-    <property name="LOG_HOME" value="home/op/log/${APP_NAME}"/>
-    <!--<property name="LOG_HOME" msg="/home/logs/${APP_NAME}" />-->
+    <property name="LOG_HOME" value="${log.path.home}"/>
 
     <!--=========================== 按照每天生成日志文件：默认配置=================================== -->
     <!-- 控制台输出 -->
@@ -24,11 +26,15 @@
 
     <!-- 按照每天生成日志文件：主项目日志 -->
     <appender name="APP_DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!--日志文件输出的文件名 -->
-            <FileNamePattern>${LOG_HOME}/debug-%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/debug-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <!--日志文件保留天数 -->
             <MaxHistory>${LOG_MAX_HISTORY}</MaxHistory>
+            <!-- 单个文件达到最大10MB时开始切分 -->
+            <maxFileSize>10MB</maxFileSize>
+            <!-- 当日志容量超过20GB，即使没有到保存期限也会开启日志清理 -->
+            <totalSizeCap>20GB</totalSizeCap>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%c类名，%t表示线程名，%L行， %p日志级别 %msg：日志消息，%n是换行符  -->
@@ -45,11 +51,15 @@
 
     <!-- 按照每天生成日志文件：主项目日志 -->
     <appender name="APP_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!--日志文件输出的文件名 -->
-            <FileNamePattern>${LOG_HOME}/info-%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/info-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <!--日志文件保留天数 -->
             <MaxHistory>${LOG_MAX_HISTORY}</MaxHistory>
+            <!-- 单个文件达到最大10MB时开始切分 -->
+            <maxFileSize>100MB</maxFileSize>
+            <!-- 当日志容量超过20GB，即使没有到保存期限也会开启日志清理 -->
+            <totalSizeCap>20GB</totalSizeCap>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%c类名，%t表示线程名，%L行， %p日志级别 %msg：日志消息，%n是换行符  -->
@@ -67,11 +77,17 @@
 
     <!-- 按照每天生成日志文件：主项目日志 -->
     <appender name="APP_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!--日志文件输出的文件名 -->
-            <FileNamePattern>${LOG_HOME}/error-%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/error-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <!--日志文件保留天数 -->
             <MaxHistory>${LOG_MAX_HISTORY}</MaxHistory>
+            <!--日志文件保留天数 -->
+            <MaxHistory>${LOG_MAX_HISTORY}</MaxHistory>
+            <!-- 单个文件达到最大10MB时开始切分 -->
+            <maxFileSize>100MB</maxFileSize>
+            <!-- 当日志容量超过20GB，即使没有到保存期限也会开启日志清理 -->
+            <totalSizeCap>20GB</totalSizeCap>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%c类名，%t表示线程名，%L行， %p日志级别 %msg：日志消息，%n是换行符  -->

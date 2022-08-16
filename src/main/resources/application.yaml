@@ -14,6 +14,7 @@ spring:
       prod:
         - mysql-prod
 
+
 xihe:
   knife4j:
     title: ${spring.application.name}
@@ -30,7 +31,9 @@ xihe:
   log:
     aspect:
       enable-count: false
-
+    path: 'home/log/${spring.application.name}/'
+    max:
+      history: 7
 ---
 
 spring:
